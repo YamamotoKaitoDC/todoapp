@@ -42,53 +42,132 @@
       crossorigin="anonymous"
     ></script>
 
+<div class="container">
+<!--モーダルのやつ-->
+  <button type="button" class="btn btn-success"  data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">＋タスク追加</button>
+   
+ 
 
-    <!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-  ＋リストの追加
-</button>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        
+        <h5 class="modal-title" id="exampleModalLabel">新しいタスク</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
-          <form>
-            <div class="form-group">
-              <label for="formGroupExampleInput">Example label</label>
-              <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
-            </div>
-            <div class="form-group">
-              <label for="formGroupExampleInput2">Another label</label>
-              <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
-            </div>
-          </form>
         </button>
       </div>
       <div class="modal-body">
-        ...
+        <div class="create-form" id="create-form">
+        <form>
+
+         
+          
+            <label for="task" class="col-form-label">タスク</label>
+            <input  class="form-control" id="task" name="task" />
+          
+
+         
+          <label for="deadline" style="margin-top: 5%; margin-bottom: 0%;">終了日</label><br>
+          <input type ="date" id ="deadline" name ="deadline"/>
+
+          <div class="form-group">
+            <label for="category" style="margin-top: 5%; margin-bottom: 0%;">カテゴリ</label>
+            <select class="form-control" name="category" id="category">
+              <option value="1">生活</option>
+              <option value="2">勉強</option>
+              <option value="3">仕事</option>
+              <option value="4">趣味</option>
+            </select>
+          </div>
+
+        </form>
+        </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="create-task">追加</button>
       </div>
     </div>
   </div>
 </div>
 
-<div class="list-group">
-  <a href="#" class="list-group-item list-group-item-action active">
-    Cras justo odio
-  </a>
-  <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
-  <a href="#" class="list-group-item list-group-item-action">Morbi leo risus</a>
-  <a href="#" class="list-group-item list-group-item-action">Porta ac consectetur ac</a>
-  <a href="#" class="list-group-item list-group-item-action disabled">Vestibulum at eros</a>
+<script src ="../javascripts/index.js"></script>
+
+
+<table class="table table-hover" id="todotable">
+  
+  <thead>
+    <tr>
+      <th scope="col" style = "width: 10%;">#</th>
+      <th scope="col" style = "width: 50%;">タスク</th>
+      <th scope="col" style = "width: 20%;">開始日</th>
+      <th scope="col" style = "width: 20%;">終了日</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+    
+      <th scope="row">1</th>
+      <td></td>
+      <td></td>
+      <td>       <button type="button"  class="btn btn-primary">更新</button>        <button type="button" class="btn btn-danger">削除</button></td>
+    </tr>
+    
+    
+
+  </tbody>
+</table>
 </div>
 
+
+
+  <script>
+    //登録ボタン押下時
+    $("#create-task").on("click", async function () {
+      //　リクエストデータをフォームから取得
+      const requestData = {
+        taskName: $("#create-form input[name=task]").val(),
+        deadline: $("#create-form input[name=deadline]").val(),
+        category: $("#create-form select[name=category]").val(),
+      };
+
+      //　新規登録APIを実行
+      const response = await httpPost(
+        "//" + window.location.host + "/api/tasks",
+        requestData
+      );
+
+      //　画面をリロード
+      window.location.reload();
+    });
+
+
+// タスク一覧取得
+/*$(async function () {
+  //一覧取得APIを実行
+  const response = await httpGet(
+    "//" + window.location.host + "/api/tasks"
+  );
+
+  const list = response.map((item) => {
+    // リストを表示
+    return `
+      <li> 
+          <span>${item.task_name}</span>
+          <span>${item.deadline}</span>
+          <span><button id ="update-button" data-id=${item.id} >更新</button></span>
+          <span><button id="delete-button" data-id=${item.id} data-delete=${item.task_name}>削除</button></span>
+      </li>`;
+  });
+
+// ul タグにリストを追加
+$("ul#task-list").append(list);
+});*/
+
+  </script>
+  
 
   </body>
 </html>
