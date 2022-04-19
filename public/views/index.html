@@ -100,23 +100,14 @@
   
   <thead>
     <tr>
-      <th scope="col" style = "width: 10%;">#</th>
+      
       <th scope="col" style = "width: 50%;">タスク</th>
-      <th scope="col" style = "width: 20%;">開始日</th>
-      <th scope="col" style = "width: 20%;">終了日</th>
+      
+      <th scope="col" style = "width: 25%;">終了日</th>
+      <th scope="col" style = "width: 25%;"></th>
     </tr>
   </thead>
-  <tbody>
-    <tr>
-    
-      <th scope="row">1</th>
-      <td></td>
-      <td></td>
-      <td>       <button type="button"  class="btn btn-primary">更新</button>        <button type="button" class="btn btn-danger">削除</button></td>
-    </tr>
-    
-    
-
+  <tbody id = "task_table">
   </tbody>
 </table>
 </div>
@@ -139,32 +130,65 @@
         requestData
       );
 
+console.log(response);
+
       //　画面をリロード
       window.location.reload();
     });
 
 
 // タスク一覧取得
-/*$(async function () {
+$(async function () {
   //一覧取得APIを実行
   const response = await httpGet(
     "//" + window.location.host + "/api/tasks"
   );
 
-  const list = response.map((item) => {
-    // リストを表示
-    return `
-      <li> 
-          <span>${item.task_name}</span>
-          <span>${item.deadline}</span>
-          <span><button id ="update-button" data-id=${item.id} >更新</button></span>
-          <span><button id="delete-button" data-id=${item.id} data-delete=${item.task_name}>削除</button></span>
-      </li>`;
-  });
+addtable(response);
 
-// ul タグにリストを追加
-$("ul#task-list").append(list);
-});*/
+  
+   
+});
+
+
+function addtable(response) {
+  for (let a = 0; a < response.length; a++) {
+    var rows = document.createElement("tr");
+    for (let b = 0; b < 4; b++) {
+      var row = document.createElement("td");
+      switch(b) {
+        case 0:
+          var cell1 = document.createElement("p");
+          cell1.textContent = response[a].task_name;
+          row.appendChild(cell1);
+          break;
+        case 1:
+          var cell2 = document.createElement("p");
+          cell2.textContent = response[a].deadline.slice(0,10);
+          row.appendChild(cell2);
+          break;
+        case 2:
+          var updatebtn = document.createElement("button");
+          updatebtn.type = "button";
+          updatebtn.className = "update";
+          updatebtn.setAttribute("data-id",response[a].id);
+          row.appendChild(updatebtn);
+          break;
+        case 3:
+          var deletebtn = document.createElement("button");
+          deletebtn.type = "button";
+          deletebtn.className = "delete";
+          deletebtn.setAttribute("data-id",response[a].id);
+          deletebtn.setAttribute("data-delete",response[a].task_name);
+          row.appendChild(deletebtn);
+          break;
+      }
+      rows.appendChild(row);
+      var tasktbl = document.getElementById("task_table");
+      tasktbl.appendChild(rows);
+    }
+  }
+}
 
   </script>
   

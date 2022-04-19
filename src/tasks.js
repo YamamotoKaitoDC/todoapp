@@ -18,7 +18,7 @@ postTasks = async function (body) {
       let d = [body.taskName, body.deadline, body.category];
       const [rows, fields] = await connection.query(sql, d);
 
-      // console.log(rows);
+       console.log(rows);
       return rows;
     } catch (err) {
         console.log(err);
@@ -46,3 +46,4 @@ getTasks = async function () {
     }
 };
 exports.getTasks = getTasks;
+
