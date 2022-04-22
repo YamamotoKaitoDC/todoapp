@@ -1,8 +1,39 @@
 body {
-  padding: 50px;
+  padding: 0px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-family: "Amastic SC",cursive;
 }
 
 a {
-  color: #00b7ff;
+  color: green;
+}
+
+img {
+  width: 50px;
+}
+
+.container-fluid {
+  padding: 50px;
+}
+
+button {
+  
+  background-color:transparent;
+  border-color:transparent;
+}
+
+a{
+text-decoration:none;
+}
+h5:hover{
+text-decoration:underline;
+}
+
+
+h1 {
+  font-family: "Amastic SC",cursive;
+}
+
+h5 {
+  font-family: "Amastic SC",cursive;
 }
