@@ -1,19 +1,20 @@
 body {
   padding: 0px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  font-family: "Amastic SC",cursive;
+  font-family: "Amastic SC",cursive, "Noto Sans JP", sans-serif;
+  background-color: gainsboro;
 }
 
 a {
-  color: green;
+  color: black;
 }
 
 img {
   width: 50px;
 }
 
-.container-fluid {
-  padding: 50px;
+.container {
+  
 }
 
 button {
@@ -29,11 +30,106 @@ h5:hover{
 text-decoration:underline;
 }
 
-
-h1 {
-  font-family: "Amastic SC",cursive;
+.arrow_box{
+  position:relative;
+  width:180px;
+  height:100px;
+  background:#EEEEEE;
+  padding:10px;
+  text-align:left;
+  border:5px solid #3F729B;
+  color:#666666;
+  font-size:20px;
+  font-weight:bold;
+}
+.arrow_box:after,.arrow_box:before{
+  border: solid transparent;
+  content:'';
+  height:0;
+  width:0;
+  pointer-events:none;
+  position:absolute;
+  right:100%;
+  top:50%;
+}
+.arrow_box:after{
+  border-color: rgba(238, 238, 238, 0);
+  border-top-width:10px;
+  border-bottom-width:10px;
+  border-left-width:20px;
+  border-right-width:20px;
+  margin-top: -10px;
+  border-right-color:#EEEEEE;
+}
+.arrow_box:before{
+  border-color: rgba(63, 114, 155, 0);
+  border-top-width:15px;
+  border-bottom-width:15px;
+  border-left-width:30px;
+  border-right-width:30px;
+  margin-top: -15px;
+  margin-right: 5px;
+  border-right-color:#3F729B;
 }
 
-h5 {
-  font-family: "Amastic SC",cursive;
+#catimgbox{
+  width: 120px;
+  height: 100px;
+  padding-right: 40px;
+  
+}
+
+.flex{
+  display: flex;
+  padding-left: 300px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  
+}
+
+header {
+  width: 100%;
+  padding: 30px 4% 10px;
+  background-color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+}
+
+
+ul {
+  list-style: none;
+  margin: 0;
+  display: flex;
+}
+
+li {
+  margin: 0 0 0 15px;
+  font-size: 20px;
+}
+
+nav {
+  margin: 0 0 0 auto;
+}
+
+#taskaddbtn {
+  margin-left: 250px;
+}
+
+#todotable {
+  margin-top: 140px;
+  background-color: white;
+}
+
+#haka {
+  margin-left: 350px;
 }

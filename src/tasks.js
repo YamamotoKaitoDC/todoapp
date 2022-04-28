@@ -37,7 +37,7 @@ getTasks = async function () {
         connection = await mysql.createConnection(config.dbSetting);
         //　ここにSQLを記述する
       const sql = 
-        "SELECT * FROM t_task LEFT JOIN m_category ON t_task.category_id = m_category.id LEFT JOIN t_priority ON t_task.priority_id = t_priority.id;";
+        "SELECT * FROM t_task INNER JOIN m_category ON t_task.category_id = m_category.id INNER JOIN t_priority ON t_task.priority_id = t_priority.priority_id;";
       const [rows, fields] = await connection.query(sql);
         return rows;
     } catch (err) {
@@ -56,7 +56,7 @@ getTasksId = async function (id) {
         connection = await mysql.createConnection(config.dbSetting);
         //　ここにSQLを記述する
         const sql =
-          "SELECT * FROM t_task LEFT JOIN m_category ON t_task.category_id = m_category.id LEFT JOIN t_priority ON t_task.priority_id = t_priority.id WHERE t_task.id = ?;";
+          "SELECT * FROM t_task INNER JOIN m_category ON t_task.category_id = m_category.id INNER JOIN t_priority ON t_task.priority_id = t_priority.priority_id WHERE t_task.task_id = ?;";
         let d = [id];
         const [rows, fields] = await connection.query(sql,d);
         return rows;
@@ -76,7 +76,7 @@ patchTasksId = async function (id, body) {
     connection = await mysql.createConnection(config.dbSetting);
     //　ここにSQLを記述する
     const sql = 
-      "UPDATE t_task SET task_name=?, deadline=?, category_id=?, task_status=?, updated_at=?,  priority_id=? WHERE id=?;";
+      "UPDATE t_task SET task_name=?, deadline=?, category_id=?, task_status=?, updated_at=?,  priority_id=? WHERE task_id=?;";
       let d = [
         body.taskName,
         body.deadline,
@@ -103,7 +103,7 @@ deleteTasksId = async function (id) {
   try {
     connection = await mysql.createConnection(config.dbSetting);
     //ここにSQLを記述する
-    const sql = "DELETE from t_task WHERE id = ?;";
+    const sql = "DELETE from t_task WHERE task_id = ?;";
     let d = [id];
     const [rows, fields] = await connection.query(sql, d);
 

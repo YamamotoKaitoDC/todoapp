@@ -16,15 +16,12 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="../stylesheets/style.css" />
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP" rel="stylesheet">
 
     <title>Todoアプリ</title>
   </head>
-  <body class="w-100">
+  <body>
 
-    
-    <div class="container">
-      <!-- Content here -->
-    </div>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -44,53 +41,49 @@
       crossorigin="anonymous"
     ></script>
 
-<div class="container-fluid">
+<div class="container">
 <!--ナビバー-->
-  <nav class="navbar navbar-expand-lg navbar-light" style="background-color:#dcdcdc;">
+  <!--<nav class="navbar navbar-expand-lg navbar-light" style="background-color:#dcdcdc;">
     <h1 style="padding: 30px;">Todo app</h1>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-  
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-      
-        <li class="nav-item">
-          <h5><a class="nav-link" href="https://www.dreamcareer.co.jp/" target="_blank" style="margin-top: 50px;">Link</a></h5>
-        </li>
-        <p></p>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="margin-top: 50px;">
-            <h5>Dropdown</h5>
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
-        </li>
-      </ul>
-
-
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      </form>
+    
+    <div  class="flex">
+      <img src ="cat3_3_sleep.png" id="catimgbox"> 
+      <div class='arrow_box'>
+      </div>
     </div>
-  </nav>
+  </nav>-->
   
-<!--ヘッダー
+<!--ヘッダー-->
 <header>
-  <div class="header_inner">
-    <h1>Todoアプリ</h1>
-  </div>
-</header>-->
+    <h1>
+        <a href = "#">TodoApp</a>
+    </h1>
+
+    <div  class="flex">
+      <img src ="cat3_3_sleep.png" id="catimgbox"> 
+      <div class='arrow_box'>
+      </div>
+    </div>
+
+    <button type="button" class="btn btn-success" id="taskaddbtn" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">＋タスク追加</button>
+
+    <nav class="pc-nav">
+        <ul>
+            <li><a href="#">linkA</a></li>
+            <li><a href="#">linkB</a></li>
+            <li><a href="#">linkC</a></li>
+        </ul>
+    </nav>
+</header>
+
 
   <p></p>
 
 <!--新規追加モーダルのやつ-->
-  <button type="button" class="btn btn-success"  data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">＋タスク追加</button>
+  
    
  
 
@@ -216,22 +209,22 @@
 
 <p></p>
 
-<table class="table table-hover" id="todotable">
-  
-  <thead>
-    <tr>
-      <th scope="col" style = "width: 10%;">優先度</th>
-      <th scope="col" style = "width: 60%;">タスク</th>
-      
-      <th scope="col" style = "width: 10%;">終了日</th>
-      <th scope="col" style = "width: 10%;">更新</th>
-      <th scope="col" style = "width: 10%;">削除</th>
-    </tr>
-  </thead>
-  <tbody id = "task_table">
-  </tbody>
-</table>
-<a href="#">Top</a>
+  <table class="table table-hover" id="todotable">
+    
+    <thead>
+      <tr>
+        <th scope="col" style = "width: 10%;">優先度</th>
+        <th scope="col" style = "width: 60%;">タスク</th>
+        
+        <th scope="col" style = "width: 10%;">終了日</th>
+        <th scope="col" style = "width: 10%; padding-left: 30px;">更新</th>
+        <th scope="col" style = "width: 10%; padding-left: 30px;">削除</th>
+      </tr>
+    </thead>
+    <tbody id = "task_table">
+    </tbody>
+  </table>
+  <img src="" id="haka">
 </div>
 
 
@@ -266,7 +259,7 @@ $(async function () {
     "//" + window.location.host + "/api/tasks"
 
 );
-console.log(response);
+
 addtable(response);
 });
 
@@ -279,8 +272,7 @@ $(document).on("click", ".update", async function() {
   const response = await httpGet(
     "//" + window.location.host + `/api/tasks/${id}`
   );
-  console.log(id);
-alert("argstrj");
+  
 
   //　日付をxxxx-xx-xxに変換
   const date = new Date(response[0].deadline);
@@ -290,7 +282,7 @@ alert("argstrj");
   const deadlineVal = `${year}-${month}-${day}`;
 
   //　初期値をセット
-  $("#update-form input[name=id]").val(response[0].id);
+  $("#update-form input[name=id]").val(response[0].task_id);
   $("#update-form input[name=task]").val(response[0].task_name);
   $("#update-form input[name=deadline]").val(deadlineVal);
   $("#update-form select[name=category]").val(response[0].category_id);
@@ -346,7 +338,7 @@ $(document).on("click", "#deletebtn", async function () {
 
   
    
-
+//　テーブル追加
 
 function addtable(response) {
   for (let a = 0; a < response.length; a++) {
@@ -374,7 +366,7 @@ function addtable(response) {
           updatebtn.type = "button";
           updatebtn.id = "updatebtn";
           updatebtn.className = "update";
-          updatebtn.setAttribute("data-taskid",response[a].id);
+          updatebtn.setAttribute("data-taskid",response[a].task_id);
           updatebtn.setAttribute("data-toggle","modal");
           updatebtn.setAttribute("data-target","#update-modal");
           var input = document.createElement('img');
@@ -387,10 +379,10 @@ function addtable(response) {
           deletebtn.type = "button";
           deletebtn.className = "delete";
           deletebtn.id = "deletebtn";
-          deletebtn.setAttribute("data-taskid",response[a].id);
+          deletebtn.setAttribute("data-taskid",response[a].task_id);
           deletebtn.setAttribute("data-delete",response[a].task_name);
           var deleteimg = document.createElement("img");
-          deleteimg.setAttribute("src","926_x_h-removebg-preview.png");
+          deleteimg.setAttribute("src","926_x_h.png");
           deletebtn.appendChild(deleteimg);
           row.appendChild(deletebtn);
           break;
@@ -398,10 +390,48 @@ function addtable(response) {
       rows.appendChild(row);
       var tasktbl = document.getElementById("task_table");
       tasktbl.appendChild(rows);
-    }
+
+  }
   }
 }
 
+
+//　ぬこ
+    $(async function(){
+      const response = await httpGet(
+        "//" + window.location.host + "/api/tasks"
+      );
+      
+
+      if(response.length < 3) {
+        $(".arrow_box").text("暇そうだね");
+        $("#catimgbox").attr("src","cat3_3_sleep.png");
+
+      } else if (response.length < 5) {
+        $(".arrow_box").text("まあまあだね");
+        $("#catimgbox").attr("src","cat4_laugh.png");
+
+      } else if (response.length < 8) {
+        $(".arrow_box").text("がんばってるね");
+        $("#catimgbox").attr("src","cat3_2_heart.png");
+
+      } else if (response.length < 777) {
+        $(".arrow_box").text("休め");
+        $("#catimgbox").attr("src","cat2_3_shock.png");
+     
+      } else if (response.length == 777) {
+        $(".arrow_box").text("休めっていったよね");
+        $("#catimgbox").attr("src","pet_angel_cat.png");
+        $("#haka").attr("src","ohaka_boseki_seiyou_mark1.png");
+      };
+      
+
+    });
+
+
+
+
+//　日付を正しく表示させるやつ
 
 function generate_date(date_data){
         const date = new Date(date_data);
@@ -412,11 +442,8 @@ function generate_date(date_data){
       }
 
   </script>
-  <style>
-    
-      
-    
-  </style>
+
+  
 
   </body>
 </html>
